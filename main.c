@@ -13,16 +13,15 @@ void exibirMapa(char mapa[y][x]);
 
 int main(void)
 {
-    while (1)
+    do
     {
         jogo();
-    }
+    } while (1);
 
     return 0;
 }
 void jogo(void)
 {
-    // Define o mapa com diferentes tipos de terrenos, incluindo espaços vazios
     char mapa[y][x] = {
         {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
