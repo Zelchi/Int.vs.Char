@@ -3,18 +3,7 @@
 #include <conio.h>
 #include <time.h>
 #include <stdlib.h>
-
-#define y 10
-#define x 10
-
-int posicao = 5;
-void menu(void);
-void jogo(void);
-void comandos(int *vivo);
-int sair();
-int sairMenu = 1;
-void exibirMapa(char mapa[y][x]);
-void atualizarMapa(char mapa[y][x]);
+#include "main.h"
 
 int main(void)
 {
@@ -49,18 +38,36 @@ void jogo(void)
         mapa[8][posicao] = '1';
         
         atualizarMapa(mapa);
-        comandos(&vivo);
+        // comandos(&vivo);
     } while (vivo);
+}
+
+struct timespec lastFrame;
+double pegaDiferencaDeTempoEmSegundos()
+{
+    struct timespec now;
+    timespec_get(&now, TIME_UTC);
+    
+    double miliSegundosAtual = (now.tv_sec * 1000.0) + (now.tv_nsec / 1e6);
+    double miliSegundosFrame = (lastFrame.tv_sec * 1000.0) + (lastFrame.tv_nsec / 1e6);
+
+    return (miliSegundosAtual - miliSegundosFrame) / 1000.0;
+}
+
+double registraNovoTempo()
+{
+    struct timespec now;
+    timespec_get(&now, TIME_UTC);
+    lastFrame = now;
 }
 
 void atualizarMapa(char mapa[y][x])
 {
-    struct timespec data;
-    timespec_get(&data, TIME_UTC);
-    long long tempo = data.tv_sec;
-    printf("%lld\n", tempo);
-
-    exibirMapa(mapa);
+    if (pegaDiferencaDeTempoEmSegundos() > 0.5)
+    {
+        registraNovoTempo();
+        exibirMapa(mapa);
+    }
 }
 
 void comandos(int *vivo)
@@ -117,7 +124,7 @@ void menu(void)
     }
 }
 
-int sair()
+void sair()
 {
     sairMenu = 0;
 }
