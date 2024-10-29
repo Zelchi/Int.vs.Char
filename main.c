@@ -19,67 +19,28 @@ int main(void)
 
 void jogo(void)
 {
+    exibirMapa(mapa);
+    mapa[8][posicao] = '1';
     int vivo = 1;
-
-    do
+    int tecla = 00;
+    while (vivo)
     {
-        system("cls");
-        char mapa[y][x] = {
-            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}};
-        mapa[8][posicao] = '1';
         
-        atualizarMapa(mapa);
-        // comandos(&vivo);
-    } while (vivo);
-}
 
-struct timespec lastFrame;
-double pegaDiferencaDeTempoEmSegundos()
-{
-    struct timespec now;
-    timespec_get(&now, TIME_UTC);
-    
-    double miliSegundosAtual = (now.tv_sec * 1000.0) + (now.tv_nsec / 1e6);
-    double miliSegundosFrame = (lastFrame.tv_sec * 1000.0) + (lastFrame.tv_nsec / 1e6);
-
-    return (miliSegundosAtual - miliSegundosFrame) / 1000.0;
-}
-
-double registraNovoTempo()
-{
-    struct timespec now;
-    timespec_get(&now, TIME_UTC);
-    lastFrame = now;
-}
-
-void atualizarMapa(char mapa[y][x])
-{
-    if (pegaDiferencaDeTempoEmSegundos() > 0.5)
-    {
-        registraNovoTempo();
-        exibirMapa(mapa);
+        if (_kbhit()) comandos(&vivo, &tecla);
     }
 }
 
-void comandos(int *vivo)
+void comandos(int *vivo, int *tecla)
 {
-    char tecla = getch();
+    *tecla = getch();
 
     fflush(stdin);
-    if (tecla == 'A' || tecla == 'a')
+    if (*tecla == 65 || *tecla == 97)
     {
         posicao--;
     }
-    if (tecla == 'D' || tecla == 'd')
+    if (*tecla == 68 || *tecla == 100)
     {
         posicao++;
     }
@@ -91,14 +52,17 @@ void comandos(int *vivo)
     {
         posicao--;
     }
-    if (tecla == 27)
+    if (*tecla == 27)
     {
         *vivo = 0;
     }
+
+    exibirMapa(mapa);
 }
 
 void exibirMapa(char mapa[y][x])
 {
+    system("cls");
     for (int i = 0; i < y; i++)
     {
         for (int j = 0; j < x; j++)
@@ -124,7 +88,7 @@ void menu(void)
     }
 }
 
-void sair()
+void sair(void)
 {
     sairMenu = 0;
 }

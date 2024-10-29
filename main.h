@@ -1,13 +1,29 @@
 #define y 10
 #define x 10
 
+char mapa[y][x] = {
+    {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+    {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+};
+
+// Menu
 int posicao = 5;
-void menu(void);
-void jogo(void);
-void comandos(int *vivo);
-void sair();
 int sairMenu = 1;
+
+void menu(void);
+void sair(void);
+
+// Jogo
+void jogo(void);
+void comandos(int *vivo, int *tecla);
+
+// Mapa
 void exibirMapa(char mapa[y][x]);
-void atualizarMapa(char mapa[y][x]);
-double pegaDiferencaDeTempoEmSegundos();
-double registraNovoTempo();
