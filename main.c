@@ -20,41 +20,32 @@ int main(void)
 void jogo(void)
 {
     exibirMapa(mapa);
-    mapa[8][posicao] = '1';
-    int vivo = 1;
-    int tecla = 00;
     while (vivo)
     {
-        
 
-        if (_kbhit()) comandos(&vivo, &tecla);
+        if (_kbhit())
+        {
+            comandos();
+        }
     }
 }
 
-void comandos(int *vivo, int *tecla)
+void comandos(void)
 {
-    *tecla = getch();
+    char tecla = getch();
 
     fflush(stdin);
-    if (*tecla == 65 || *tecla == 97)
+    switch (tecla)
     {
-        posicao--;
-    }
-    if (*tecla == 68 || *tecla == 100)
-    {
-        posicao++;
-    }
-    if (posicao == 0)
-    {
-        posicao++;
-    }
-    if (posicao == x - 1)
-    {
-        posicao--;
-    }
-    if (*tecla == 27)
-    {
-        *vivo = 0;
+    case 'a':
+        teclaA();
+        break;
+    case 'd':
+        teclaD();
+        break;
+    case 27:
+        teclaESC();
+        break;
     }
 
     exibirMapa(mapa);
@@ -67,7 +58,14 @@ void exibirMapa(char mapa[y][x])
     {
         for (int j = 0; j < x; j++)
         {
-            printf("%c ", mapa[i][j]);
+            if (i == JogadorPosicaoY && j == JogadorPosicaoX)
+            {
+                printf("1 ");
+            }
+            else
+            {
+                printf("%c ", mapa[i][j]);
+            }
         }
         printf("\n");
     }
@@ -83,6 +81,9 @@ void menu(void)
         jogo();
         break;
     case '3':
+        sair();
+        break;
+    case 27:
         sair();
         break;
     }
