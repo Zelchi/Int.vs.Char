@@ -15,15 +15,18 @@ char mapa[y][x] = {
 };
 
 // Menu
-int JogadorPosicaoY = 8;
-int JogadorPosicaoX = 5;
+void menu(void);
 int sairMenu = 1;
 
-void menu(void);
+void jogo(void);
+void selecionarPersonagem();
+char personagem = '1';
+void placar(void);
 void sair(void);
 
 // Jogo
-void jogo(void);
+int JogadorPosicaoY = 8;
+int JogadorPosicaoX = 5;
 void comandos();
 int vivo = 1;
 
@@ -31,7 +34,6 @@ int vivo = 1;
 void exibirMapa(char mapa[y][x]);
 
 // Teclas
-
 void teclaA()
 {
     if (JogadorPosicaoX > 1)
