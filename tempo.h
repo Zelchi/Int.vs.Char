@@ -20,12 +20,9 @@ void novoTempo()
 }
 
 // Logica de como a função tem que ser feita:
-// void exemplo()
+// if (tempoDecorrido() > 1) // A cada 1 segundo;
 // {
-//     if (tempoDecorrido() > 1) // A cada 1 segundo;
-//     {
-//         novoTempo();
-        
-//         Código...
-//     }
+//     novoTempo();
+
+//     Código...
 // }

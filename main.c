@@ -47,7 +47,7 @@ void jogo(void)
     exibirMapa(mapa);
     while (vivo)
     {
-        if (_kbhit()) // Verifica se alguma tecla foi pressionada no teclado.
+        if (kbhit()) // Verifica se alguma tecla foi pressionada no teclado.
         {
             comandos();
         }
@@ -93,7 +93,7 @@ void exibirMapa(char mapa[y][x]) // Renderiza o mapa
     {
         for (int j = 0; j < x; j++)
         {
-            if (i == JogadorPosicaoY && j == JogadorPosicaoX) // Renderiza o jogador no mapa;
+            if (i == JogadorPosicaoY && j == JogadorPosicaoX) // Renderiza o jogador no mapa
             {
                 printf("%c ", personagem);
             }
