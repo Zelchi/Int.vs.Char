@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "main.h"
+#include "tempo.h"
 
 int main(void)
 {
@@ -22,10 +23,15 @@ void jogo(void)
     exibirMapa(mapa);
     while (vivo)
     {
-
-        if (_kbhit())
+        if (_kbhit()) // Verifica se alguma tecla foi pressionada no teclado.
         {
             comandos();
+        }
+        if (tempoDecorrido() > 0.5) // Meio segundo
+        {
+            novoTempo();
+            
+            printf("Batata!");
         }
     }
     vivo = 1;
@@ -43,6 +49,12 @@ void comandos(void)
     case 'd':
         teclaD();
         break;
+    case 'w':
+        teclaW();
+        break;
+    case 's':
+        teclaS();
+        break;
     case 27:
         teclaESC();
         break;
@@ -50,14 +62,14 @@ void comandos(void)
     exibirMapa(mapa);
 }
 
-void exibirMapa(char mapa[y][x])
+void exibirMapa(char mapa[y][x]) // Renderiza o mapa
 {
     system("cls");
     for (int i = 0; i < y; i++)
     {
         for (int j = 0; j < x; j++)
         {
-            if (i == JogadorPosicaoY && j == JogadorPosicaoX)
+            if (i == JogadorPosicaoY && j == JogadorPosicaoX) // Renderiza o jogador no mapa;
             {
                 printf("%c ", personagem);
             }
