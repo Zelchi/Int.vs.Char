@@ -29,11 +29,9 @@ int JogadorPosicaoY = 8; // Posição inicial Y
 int JogadorPosicaoX = 5; // Posição inicial X
 void comandos();
 int vivo = 1; // Estado de vida do jogador.
-
-// Mapa //
 void exibirMapa(char mapa[y][x]);
 
-// Teclas //
+// Comandos //
 void teclaA()
 {
     if (JogadorPosicaoX > 1) // Impede o jogador entrar na coluna 0
@@ -52,7 +50,6 @@ void teclaESC()
 {
     vivo = 0;
 }
-
 // Adicionei teclas W e S apenas para teste.
 void teclaW()
 {

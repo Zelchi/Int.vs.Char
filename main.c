@@ -18,6 +18,30 @@ int main(void)
     return 0;
 }
 
+void menu(void)
+{
+    system("cls");
+    printf("1 - Jogo\n2 - Selecionar Personagem\n3 - Placar\n4 - Sair\n");
+    switch (getch())
+    {
+    case '1':
+        jogo();
+        break;
+    case '2':
+        selecionarPersonagem();
+        break;
+    case '3':
+        placar();
+        break;
+    case '4':
+        sair();
+        break;
+    case 27:
+        sair();
+        break;
+    }
+}
+
 void jogo(void)
 {
     exibirMapa(mapa);
@@ -79,30 +103,6 @@ void exibirMapa(char mapa[y][x]) // Renderiza o mapa
             }
         }
         printf("\n");
-    }
-}
-
-void menu(void)
-{
-    system("cls");
-    printf("1 - Jogo\n2 - Selecionar Personagem\n3 - Placar\n4 - Sair\n");
-    switch (getch())
-    {
-    case '1':
-        jogo();
-        break;
-    case '2':
-        selecionarPersonagem();
-        break;
-    case '3':
-        placar();
-        break;
-    case '4':
-        sair();
-        break;
-    case 27:
-        sair();
-        break;
     }
 }
 
