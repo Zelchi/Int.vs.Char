@@ -1,4 +1,5 @@
 #include <time.h>
+#include <stdlib.h>
 
 // Ignora essas duas funções, o importante é que o intervalo na main vai fazer o que a gente quer. :)
 
@@ -18,11 +19,6 @@ void novoTempo()
     clock_gettime(CLOCK_REALTIME, &novoFrame);
     ultimoFrame = novoFrame;
 }
-
-// Logica de como a função tem que ser feita:
-// if (tempoDecorrido() > 1) // A cada 1 segundo;
-// {
-//     novoTempo();
-
-//     Código...
-// }
+int geraNumeroAleatorio(int min, int max) {
+    return min + rand() % (max - min + 1);
+}
