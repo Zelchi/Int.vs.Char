@@ -10,10 +10,9 @@
 int main(void)
 {
     setlocale(LC_ALL, "pt_BR.UTF-8");
-
     do
     {
-        vivo = 1;
+        fflush(stdin);
         menu();
     } while (sairMenu);
 
@@ -47,53 +46,34 @@ void menu(void)
 void jogo(void)
 {
     vivo = 1;
+    fflush(stdin);
     do
     {
         if (kbhit()) // Verifica se alguma tecla foi pressionada no teclado.
         {
             comandos();
         }
-        else if (tempoDecorrido() > 1)
+        if (tempoDecorrido() > 1)
         {
             novoTempo();
 
             inimigosSpawn();
         }
-        if (verificarMorte())
-        {
-            vivo = 0;
-        }
-
     } while (vivo);
-}
-
-int verificarMorte()
-{
-    for (int i = 0; i < 27; i++)
-    {
-        if (inimigos[i].posicaoX == JogadorPosicaoX && inimigos[i].posicaoY == JogadorPosicaoY)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
 }
 
 void inimigosSpawn(void)
 {
     srand(time(NULL));
-    int numeroAleatorio = geraNumeroAleatorio(1, 8);
+    int lugarAleatorio = geraNumeroAleatorio(1, 8);
     int letraAleatoria = geraNumeroAleatorio(0, 26);
 
     inimigos[letraAleatoria].posicaoY = 0;
-    inimigos[letraAleatoria].posicaoX = numeroAleatorio;
+    inimigos[letraAleatoria].posicaoX = lugarAleatorio;
 
-    for (int i = 0; i < 27; i++)
+    for (int i = 0; i < 26; i++)
     {
-        if (inimigos[i].posicaoY >= 0)
+        if (inimigos[i].posicaoY > -1)
         {
             inimigos[i].posicaoY++;
             exibirMapa(mapa);
@@ -144,14 +124,21 @@ void exibirMapa(char mapa[y][x]) // Renderiza o mapa
             {
                 if (i == inimigos[k].posicaoY && j == inimigos[k].posicaoX)
                 {
-                    printf("%c ", inimigos[k].letra);
-                    naoRenderizouInimigo = 0;
+                    if (inimigos[k].posicaoY != 0 && inimigos[k].posicaoX != 0)
+                    {
+                        printf("%c ", inimigos[k].letra);
+                        naoRenderizouInimigo = 0;
+                    }
+                }
+                if (inimigos[k].posicaoY == JogadorPosicaoY && inimigos[k].posicaoX == JogadorPosicaoX)
+                {
+                    menuDeMorte();
                 }
             }
             if (i == JogadorPosicaoY && j == JogadorPosicaoX && naoRenderizouInimigo)
             {
                 printf("%c ", personagem);
-                naoRenderizouPlayer = 0;
+                naoRenderizouPlayer = 0; // Não
             }
             if (naoRenderizouPlayer && naoRenderizouInimigo)
             {
@@ -160,6 +147,22 @@ void exibirMapa(char mapa[y][x]) // Renderiza o mapa
         }
         printf("\n");
     }
+}
+
+void menuDeMorte(void)
+{
+    system("cls");
+    for (int i = 0; i < 26; i++)
+    {
+        inimigos[i].posicaoX = -1;
+        inimigos[i].posicaoY = -1;
+    }
+    JogadorPosicaoY = 8;
+    JogadorPosicaoX = 5;
+
+    printf("Infelizmente você morreu! :(\n");
+    system("pause");
+    menu();
 }
 
 void selecionarPersonagem()
@@ -171,33 +174,43 @@ void selecionarPersonagem()
     {
     case '0':
         personagem = '0';
+        menu();
         break;
     case '1':
         personagem = '1';
+        menu();
         break;
     case '2':
         personagem = '2';
+        menu();
         break;
     case '3':
         personagem = '3';
+        menu();
         break;
     case '4':
         personagem = '4';
+        menu();
         break;
     case '5':
         personagem = '5';
+        menu();
         break;
     case '6':
         personagem = '6';
+        menu();
         break;
     case '7':
         personagem = '7';
+        menu();
         break;
     case '8':
         personagem = '8';
+        menu();
         break;
     case '9':
         personagem = '9';
+        menu();
         break;
     default:
         system("cls");
@@ -206,6 +219,7 @@ void selecionarPersonagem()
         selecionarPersonagem();
         break;
     }
+    fflush(stdin);
 }
 
 void placar(void)

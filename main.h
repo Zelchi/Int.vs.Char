@@ -28,10 +28,10 @@ void sair(void);
 int JogadorPosicaoY = 8; // Posição inicial Y
 int JogadorPosicaoX = 5; // Posição inicial X
 void comandos();
-int verificarMorte();
 int vivo; // Estado de vida do jogador.
 void exibirMapa(char mapa[y][x]);
 void inimigosSpawn(void);
+void menuDeMorte(void);
 
 // Comandos //
 void teclaA()
