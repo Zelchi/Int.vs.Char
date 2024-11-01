@@ -46,41 +46,43 @@ void menu(void)
 
 void jogo(void)
 {
-    exibirMapa(mapa);
+    vivo = 1;
     do
     {
         if (kbhit()) // Verifica se alguma tecla foi pressionada no teclado.
         {
             comandos();
         }
-        else if (tempoDecorrido() > 0.3) // Meio segundo
+        else if (tempoDecorrido() > 1)
         {
             novoTempo();
 
-            aleatorezarInimigos();
-            atkInimigos();
-            exibirMapa(mapa);
+            inimigosSpawn();
         }
-        verificarMorte();
-    } while (vivo);
-}
-
-void verificarMorte()
-{
-    for (int i = 0; i < 27; i++)
-    {
-        if (inimigos[i].posicaoX && inimigos[i].posicaoY == JogadorPosicaoX && JogadorPosicaoY)
+        if (verificarMorte())
         {
             vivo = 0;
         }
+
+    } while (vivo);
+}
+
+int verificarMorte()
+{
+    for (int i = 0; i < 27; i++)
+    {
+        if (inimigos[i].posicaoX == JogadorPosicaoX && inimigos[i].posicaoY == JogadorPosicaoY)
+        {
+            return 1;
+        }
         else
         {
-            vivo = 1;
+            return 0;
         }
     }
 }
 
-int aleatorizarInimigos(void)
+void inimigosSpawn(void)
 {
     srand(time(NULL));
     int numeroAleatorio = geraNumeroAleatorio(1, 8);
@@ -88,15 +90,13 @@ int aleatorizarInimigos(void)
 
     inimigos[letraAleatoria].posicaoY = 0;
     inimigos[letraAleatoria].posicaoX = numeroAleatorio;
-    return letraAleatoria;
-}
-void atkInimigos(void)
-{
+
     for (int i = 0; i < 27; i++)
     {
         if (inimigos[i].posicaoY >= 0)
         {
             inimigos[i].posicaoY++;
+            exibirMapa(mapa);
         }
         if (inimigos[i].posicaoY > 8)
         {
@@ -137,23 +137,23 @@ void exibirMapa(char mapa[y][x]) // Renderiza o mapa
     {
         for (int j = 0; j < x; j++)
         {
-            int renderizarMapa = 1;
+            int naoRenderizouPlayer = 1;
+            int naoRenderizouInimigo = 1;
 
             for (int k = 0; k < 26; k++)
             {
                 if (i == inimigos[k].posicaoY && j == inimigos[k].posicaoX)
                 {
                     printf("%c ", inimigos[k].letra);
-                    renderizarMapa = 0;
+                    naoRenderizouInimigo = 0;
                 }
             }
-            if (i == JogadorPosicaoY && j == JogadorPosicaoX)
+            if (i == JogadorPosicaoY && j == JogadorPosicaoX && naoRenderizouInimigo)
             {
                 printf("%c ", personagem);
-                renderizarMapa = 0;
+                naoRenderizouPlayer = 0;
             }
-
-            if (renderizarMapa)
+            if (naoRenderizouPlayer && naoRenderizouInimigo)
             {
                 printf("%c ", mapa[i][j]);
             }
