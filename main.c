@@ -19,7 +19,7 @@ int main(void)
     return 0;
 }
 
-void menu(void)
+void menu(void) // Menu principal
 {
     system("cls");
     printf("1 - Jogo\n2 - Selecionar Personagem\n3 - Sair\n");
