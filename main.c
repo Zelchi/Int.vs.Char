@@ -22,7 +22,7 @@ int main(void)
 void menu(void)
 {
     system("cls");
-    printf("1 - Jogo\n2 - Selecionar Personagem\n3 - Placar\n4 - Sair\n");
+    printf("1 - Jogo\n2 - Selecionar Personagem\n3 - Sair\n");
     switch (getch())
     {
     case '1':
@@ -32,9 +32,6 @@ void menu(void)
         selecionarPersonagem();
         break;
     case '3':
-        placar();
-        break;
-    case '4':
         sair();
         break;
     case 27:
